@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import appStock from 'components/Stock'
 
 export default {
@@ -28,7 +28,16 @@ export default {
   },
   methods: {
     preformSale (item) {
-      console.log('preformSale called', item);
+      const stock = this.heldStocks[item.index];
+      if (stock.held >= item.value) {
+        this.$store.commit('SELL', {
+          stock,
+          value: item.value
+        })
+      }
+      else {
+        alert("You don't have enough stock")
+      }
     }
   },
   components: {

@@ -45,6 +45,7 @@ const getters = {
 
 const mutations = {
   BUY (state, value) {
+    console.log('BUY Called')
     const localCopy = state.stocks.find(element => {
       return value.stock.name === element.name
     })
@@ -54,11 +55,29 @@ const mutations = {
       return
     }
 
-    state.funds -= parseInt(value.value)
+    const cost = parseInt(value.stock.value) * parseInt(value.value)
+    state.funds -= cost
     localCopy.held += parseInt(value.value)
   },
   SELL (state, value) {
-    state.funds += value
+    console.log('SELL Called')
+    const localCopy = state.stocks.find(element => {
+      return value.stock.name === element.name
+    })
+
+    if (!localCopy) {
+      console.log('Stock not found')
+      return
+    }
+
+    const cost = parseInt(value.stock.value) * parseInt(value.value)
+    state.funds += cost
+    console.log('Cost:', cost)
+    localCopy.held -= parseInt(value.value)
+    console.log('Held:', localCopy.held)
+  },
+  END_DAY (state, value) {
+    console.log('END_DAY called')
   }
 }
 

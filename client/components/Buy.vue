@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import appStock from 'components/Stock'
 
 export default {
@@ -24,15 +24,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['stocks'])
+    ...mapGetters(['funds', 'stocks'])
   },
   methods: {
     preformPurchase (item) {
       const stock = this.stocks[item.index];
-      this.$store.commit('BUY', {
-        stock,
-        value: item.value
-      })
+      const cost = stock.value * item.value;
+      if (this.funds >= cost) {
+        this.$store.commit('BUY', {
+          stock,
+          value: item.value
+        })
+      }
+      else {
+        alert("You don't have enough funds")
+      }
     }
   },
   components: {

@@ -13,12 +13,16 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="collapsible-menu">
         <ul class="nav navbar-nav">
-          <router-link to="/sell" tag="li" active-class="active"><a>Portfolio</a></router-link>
-          <router-link to="/buy" tag="li" active-class="active"><a>Stocks</a></router-link>
+          <router-link to="/sell" tag="li" active-class="active">
+            <a>Portfolio</a>
+          </router-link>
+          <router-link to="/buy" tag="li" active-class="active">
+            <a>Stocks</a>
+          </router-link>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <p class="navbar-text" style="cursor: pointer;" @click="endDay">End Day</p>
+            <button class="btn btn-default navbar-btn" style="cursor: pointer;" @click="endDay">End Day</button>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Save &amp; Load
@@ -34,7 +38,8 @@
             </ul>
           </li>
           <li>
-            <p class="navbar-text"><strong>Funds</strong> ${{funds}}</p>
+            <p class="navbar-text">
+              <strong>Funds</strong> ${{funds}}</p>
           </li>
         </ul>
       </div>
@@ -44,18 +49,33 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
+import endDay from 'end-day'
 
 export default {
   methods: {
-    endDay() {
+    endDay () {
       console.log('endDay called');
+      endDay();
     },
-    save() {
+    save () {
       console.log('save called');
+      this.$http.put("https://menal-load-test.firebaseio.com/stock.json", this.$store.state, {})
+        .then(response => {
+          console.log(response)
+        }, response => {
+          console.log(response)
+        })
     },
-    load() {
+    load () {
       console.log('load called');
+      this.$http.get("https://menal-load-test.firebaseio.com/stock.json", {})
+        .then((response) => {
+          console.log(response.body)
+          this.$store.replaceState(response.body)
+        }, response => {
+          console.log(response)
+        })
     }
   },
   computed: {
