@@ -1,18 +1,36 @@
 <template>
-  <div class="page">
-    <counter></counter>
-    <p>
-      To get started, edit files in <code>./client</code> and save.
-    </p>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-header></app-header>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <transition name="move" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Counter from 'components/Counter'
+import appHeader from 'components/Header'
 
 export default {
   components: {
-    Counter
+    appHeader
   }
 }
 </script>
+
+<style>
+.move-enter-active, .move-leave-active {
+  transition: opacity 0.5s;
+}
+.move-enter, .move-leave-to {
+  opacity: 0;
+}
+
+</style>
