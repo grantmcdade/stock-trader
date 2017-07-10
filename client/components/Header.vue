@@ -34,7 +34,7 @@
             </ul>
           </li>
           <li>
-            <p class="navbar-text">Funds (amount)</p>
+            <p class="navbar-text"><strong>Funds</strong> ${{funds}}</p>
           </li>
         </ul>
       </div>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   methods: {
     endDay() {
@@ -55,6 +57,9 @@ export default {
     load() {
       console.log('load called');
     }
+  },
+  computed: {
+    ...mapGetters(['funds'])
   }
 }
 </script>
